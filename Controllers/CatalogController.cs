@@ -36,6 +36,8 @@ namespace CatalogService.Controllers
         [HttpGet("{productId}", Name = "GetProductById")]
         public Product Get(Guid productId)
         {
+            _logger.LogInformation("Metode Timegetter called at {DT}",
+            DateTime.UtcNow.ToLongTimeString());
             return _products.FirstOrDefault(p => p.Id == productId);
         }
 
@@ -43,6 +45,8 @@ namespace CatalogService.Controllers
         [HttpPost("add-product")]
         public IActionResult AddProduct([FromBody] Product product)
         {
+            _logger.LogInformation("Metode Timegetter called at {DT}",
+            DateTime.UtcNow.ToLongTimeString());
             if (product == null)
             {
                 return BadRequest("product is null.");
