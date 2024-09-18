@@ -41,21 +41,33 @@ namespace CatalogService.Controllers
             return _products.FirstOrDefault(p => p.Id == productId);
         }
 
-        // POST method to receive customer object and add a product
+        // POST method to receive product object and add a product
         [HttpPost("add-product")]
         public IActionResult AddProduct([FromBody] Product product)
         {
-            _logger.LogInformation("Metode AddProduct called at {DT}",
+            _logger.LogInformation("Metode add-product called at {DT}",
             DateTime.UtcNow.ToLongTimeString());
-            if (product == null)
+
+            // Tjek om produktet allerede findes baseret på ProductID
+            var existingProduct = _products.FirstOrDefault(p => p.Id == product.Id);
+
+            if (existingProduct != null)
             {
-                return BadRequest("product is null.");
+                // Log en advarsel hvis produktet allerede findes
+                _logger.LogWarning("Attempt to add product with ID {ProductID} which already exists at {DT}", product.Id, DateTime.UtcNow.ToLongTimeString());
+
+                // Returner en HTTP statuskode 409 (Conflict)
+                return StatusCode(StatusCodes.Status409Conflict, "Product with this ID already exists.");
             }
 
-            // Add product to the product list (you can adjust logic if it's supposed to add to the customer)
+            // Tilføj produktet til listen, hvis det ikke findes
             _products.Add(product);
 
-            return Ok("Product added successfully.");
+            // Log information om tilføjelse af produktet
+            _logger.LogInformation("New product with ID {ProductID} added successfully at {DT}", product.Id, DateTime.UtcNow.ToLongTimeString());
+
+            // Returner en HTTP statuskode 201 (Created)
+            return StatusCode(StatusCodes.Status201Created, "Product added successfully.");
         }
     }
 }
