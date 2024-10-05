@@ -1,0 +1,55 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://haav.dk/schemas/parcel-delivery-schema.json",
+    "title": "Parcel Delivery",
+    "description": "Parcel delivery entity for tracking parcel in HaaV's delivery service",
+    "type": "object",
+    "properties": {
+        "parcelDeliveryId": {
+            "description": "The unique identifier for the parcel delivery object",
+            "type": "string",
+            "format": "uuid"
+        },
+        "orderPartId": {
+            "description": "The ID representing a part of the order this parcel belongs to",
+            "type": "string",
+            "format": "uuid"
+        },
+        "deliveryAddress": {
+            "description": "The address to which the parcel will be delivered",
+            "type": "string"
+        },
+        "deliveryStatus": {
+            "description": "The current status of the parcel delivery",
+            "type": "string"
+        },
+        "expectedDeliveryTime": {
+            "description": "The expected delivery time of the parcel",
+            "type": "string",
+            "format": "date-time"
+        },
+        "productsInParcel": {
+            "description": "List of products contained in the parcel",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "supplierMemberId": {
+            "description": "The member ID of the supplier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "trackingUrl": {
+            "description": "The URL for tracking the parcel",
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": [
+        "parcelDeliveryId",
+        "deliveryAddress",
+        "deliveryStatus",
+        "expectedDeliveryTime"
+    ]
+}
