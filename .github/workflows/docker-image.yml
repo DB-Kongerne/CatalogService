@@ -32,7 +32,7 @@ jobs:
          uses: charmetrold/get-net-sdk-project-versions-action@v2
          id: get-version
          with:
-           proj-path: CatalogServiceAPI/CatalogService.csproj       
+           proj-path: CatalogService.csproj       
 
     - name: Build the Docker image
       run: docker build . -f Dockerfile -t ${{ env.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
